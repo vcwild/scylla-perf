@@ -21,7 +21,7 @@ This repository contains a simple example of how to deploy a ScyllaDB cluster an
 To deploy a single node ScyllaDB cluster, you can use the following command:
 
 ```bash
-docker run --name some-scylla --hostname some-scylla -p 9042:9042 -d scylladb/scylla --smp 1
+docker run --name some-scylla --hostname some-scylla -p 9042:9042 -p "19042:19042" -d scylladb/scylla --smp 1
 ```
 
 This will create a scylla container with 1 core. You can change the number of cores by changing the `--smp` parameter. The hostname is set to `some-scylla` in this case.
@@ -49,7 +49,7 @@ This will use the node tool to get the status of the scylla node and extract the
 To run cassandra-stress, you can use the following command:
 
 ```bash
-docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress write n=1000 -node $HOST_IP'
+docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress write duration=10s -rate threads=10 -node $HOST_IP'
 ```
 
 This will run a write test with 1000 operations on the host machine. We'll be using the host network to connect to the scylla container because it's already exposed to the host machine.
