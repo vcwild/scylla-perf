@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  some-scylla:
+    image: scylladb/scylla
+    container_name: some-scylla
+    networks:
+      - scylla-perf
+    ports:
+      - "9042:9042"
+      - "19042:19042"
+
+networks:
+  scylla-perf:
+    name: scylla-perf
