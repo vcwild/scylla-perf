@@ -1,3 +1,7 @@
+from datetime import datetime
+from src.cli_types import ProcessStats, RequirementsResults
+
+
 TEST_RESULTS = [
     "******************** Stress Settings ********************",
     "Command:",
@@ -131,3 +135,18 @@ TEST_RESULTS = [
     "END",
     "",
 ]
+
+REQUIREMENTS_RESULTS = RequirementsResults(
+    number_stress_tests=1,
+    process_stats=[
+        ProcessStats(
+            start_time=datetime.datetime(2024, 9, 11, 20, 23, 53, 580820),
+            end_time=datetime.datetime(2024, 9, 11, 20, 24, 4, 395492),
+            duration=datetime.timedelta(seconds=10, microseconds=814672),
+        )
+    ],
+    op_rate_sum=20.671,
+    latency_mean_average=0.4,
+    latency_99th_percentile_average=0.8,
+    latency_max_std_dev=0.2,
+)
