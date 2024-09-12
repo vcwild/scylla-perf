@@ -1,10 +1,17 @@
+<div align="center">
+  <img src=".github/assets/image.png" width="230px" />
+</div>
+<br/>
+<div align="center">
+  <img src="https://img.shields.io/github/languages/count/vcwild/scylla-perf?color=%234466fb&style=flat-square" alt="languages" />
+  <img src="https://img.shields.io/github/license/vcwild/scylla-perf?color=%234466fb&style=flat-square" alt="license" />
+  <img src="https://img.shields.io/github/repo-size/vcwild/scylla-perf?color=%234466fb&style=flat-square" alt="repo size" />
+  <img src="https://img.shields.io/github/actions/workflow/status/vcwild/scylla-perf/build.yml?branch=main&style=flat-square&color=%234466fb" alt="build" />
+</div>
+
 # scylla-perf
 
-ScyllaDB challenge
-
-## Introduction
-
-This repository contains a CLI program that is used to run a performance test on a ScyllaDB cluster.
+Scylla-perf is a CLI program that is used to run performance testing on a ScyllaDB cluster.
 
 ## Table of Contents
 
