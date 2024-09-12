@@ -30,7 +30,16 @@ def aggregated_view(requirements_results: RequirementsResults):
     )
 
 
+def _results_are_not_consistent(requirements_results):
+    if not requirements_results.op_rate_sum or not requirements_results.latency_mean_average:
+        return True
+    return False
+
+
 def results_view(requirements_results: RequirementsResults):
+    if _results_are_not_consistent(requirements_results):
+        print("❌ Failed to generate consistent results")
+        return
     print("\033c", end="")
     print(
         c.BOLD
