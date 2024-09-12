@@ -12,9 +12,15 @@ check-compose:
 check-status:
 	@docker info
 
+up-compose:
+	@docker-compose up -d
+
 # pull docker image dependencies
 pull: check
 	@docker pull scylladb/scylla
 	@docker pull scylladb/cassandra-stress
 
-.PHONY: all check check-compose check-status pull
+# pull docker images and start the scyllaDB container
+install: pull up-compose
+
+.PHONY: all check check-compose check-status pull up-compose install
