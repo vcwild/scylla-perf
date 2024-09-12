@@ -4,7 +4,7 @@ ScyllaDB challenge
 
 ## Introduction
 
-This repository contains a CLI program that can be used to run a performance test on a ScyllaDB cluster.
+This repository contains a CLI program that is used to run a performance test on a ScyllaDB cluster.
 
 ## Table of Contents
 
@@ -14,6 +14,7 @@ This repository contains a CLI program that can be used to run a performance tes
   - [Deploying a ScyllaDB cluster](#deploying-a-scylladb-cluster)
   - [Finding the host IP](#finding-the-host-ip)
   - [Running a Cassandra-stress](#running-a-cassandra-stress)
+  - [Configuring the CLI program](#configuring-the-cli-program)
 - [Running the performance test](#running-the-performance-test)
 
 ## Requirements
@@ -76,7 +77,7 @@ docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress w
 
 This will run a write test with 1000 operations on the host machine. We'll be using the host network to connect to the scylla container because it's already exposed to the host machine.
 
-### COnfiguring the CLI program
+### Configuring the CLI program
 
 To run the performance test, you should first give execute permission to the CLI program.
 
