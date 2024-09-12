@@ -13,7 +13,7 @@
 
 Scylla-perf is a CLI program that is used to run performance testing on a ScyllaDB cluster.
 
-The CLI works by encapsulating all of its dependencies in docker containers, so having [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) installed are the only requirements.
+The CLI works by encapsulating all of its dependencies in docker containers, so having [docker](https://docs.docker.com/engine/install/), [rootless-mode](https://docs.docker.com/engine/security/rootless/) access, and [docker-compose](https://docs.docker.com/compose/install/) installed are the only requirements.
 
 This project **only supports Linux-based systems**.
 
@@ -28,7 +28,9 @@ This project **only supports Linux-based systems**.
 
 ## Requirements
 
+- [Make](https://www.gnu.org/software/make/)
 - [Docker](https://docs.docker.com/engine/install/)
+- [Rootless Docker](https://docs.docker.com/engine/security/rootless/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [ScyllaDB image](https://hub.docker.com/r/scylladb/scylla/)
 - [Cassandra-stress image](https://hub.docker.com/r/scylladb/cassandra-stress)
@@ -42,7 +44,7 @@ make
 ```
 
 This will verify if `docker` and `docker-compose` are installed and will automatically pull the required container images.
-The make command **does NOT** install [docker](https://docs.docker.com/engine/install/) or [docker-compose](https://docs.docker.com/compose/install/). You need to install them manually.
+The make command **does NOT** install [docker](https://docs.docker.com/engine/install/) or [docker-compose](https://docs.docker.com/compose/install/). You need to install them manually and give docker [rootless-mode](https://docs.docker.com/engine/security/rootless/) access.
 
 If all sanity checks pass, you can skip to the [running the performance test](#running-the-performance-test) section.
 
@@ -118,7 +120,7 @@ The first time you run the program, it will instantiate the ScyllaDB database cl
 After the configuration is done, you can run any cassandra-stress test on the cluster.
 
 ```bash
-scylla-perf <N>
+scylla-perf N
 ```
 
 Where `N` is the number of cassandra-stress tests you want to run.
