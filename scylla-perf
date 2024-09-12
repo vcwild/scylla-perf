@@ -1,23 +1,12 @@
 #!/usr/bin/env python3
 import argparse
-import logging
 import threading
 
 from src.routines import execute_stress_routine
 from src.spinner import SpinnerThread
 from src.cli_types import RequirementsResults
 from src.views import results_view
-from src.constants import Color as c, HOST_IP, DEFAULT_HOST_IP
-
-
-def _check_env_vars_set():
-    """Check if the required environment variables are set."""
-    if HOST_IP == DEFAULT_HOST_IP:
-        logging.warning(
-            c.YELLOW
-            + f"The `HOST_IP` environment variable is not set, defaulting to: {HOST_IP}"
-            + c.END,
-        )
+from src.constants import HOST_IP
 
 
 def _set_parser() -> argparse.ArgumentParser:
@@ -35,6 +24,7 @@ def _set_parser() -> argparse.ArgumentParser:
         choices=range(1, 11),  # limit to 10 tests max
         action="store",
     )
+    # create an argument to run the docker-compose file
     return parser.parse_args()
 
 
@@ -56,7 +46,6 @@ def _run_cli(args):
 
 
 def main():
-    _check_env_vars_set()
     args = _set_parser()
     _run_cli(args)
 
