@@ -1,0 +1,18 @@
+name: complete-checking
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check CLI functional
+      # if status return code of the action is 2 then the action should be marked as success
+        run: chmod +x ./scylla-perf |
+              ./scylla-perf  -h
+
