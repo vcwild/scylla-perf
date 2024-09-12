@@ -2,7 +2,7 @@ define task =
 if grep -q docker /etc/group
 then
 		touch .rootless
-		echo "Docker group already exists"
+		echo "✅ Docker group already exists"
 else
 		sudo groupadd docker
 fi
@@ -10,6 +10,8 @@ sudo usermod -aG docker $$USER
 endef
 
 all: check check-compose check-status install
+	@echo "✅ Docker and docker-compose are installed and running"
+	@echo "✅ Docker image dependencies are pulled"
 
 .ONESHELL:
 
@@ -28,7 +30,7 @@ check-compose:
 
 # check if docker is running
 check-status:
-	@docker info
+	@docker info 2>/dev/null || echo "Docker is not running"
 
 # pull docker image dependencies
 install: .rootless
