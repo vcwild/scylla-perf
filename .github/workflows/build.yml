@@ -12,7 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check CLI functional
-      # if status return code of the action is 2 then the action should be marked as success
         run: chmod +x ./scylla-perf |
               ./scylla-perf  -h
+  run:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ScribeMD/rootless-docker@0.2.2
+      - name: Use Docker in rootless mode.
+        run: |
+            docker run --name some-scylla --hostname some-scylla -p 9042:9042 -p 19042:19042 -d scylladb/scylla --smp 1
+            sleep 15
+            chmod +x ./scylla-perf
+            ./scylla-perf 2
 

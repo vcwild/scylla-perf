@@ -8,7 +8,7 @@ from src.colors import Color as c
 def find_host_ip() -> str:
     """Tries to find the IP address of the ScyllaDB container, else deploys a new instance of it."""
     result = subprocess.run(
-        ["docker", "exec", "-it", "some-scylla", "nodetool", "status"],
+        ["docker", "exec", "some-scylla", "nodetool", "status"],
         capture_output=True,
         text=True,
     )

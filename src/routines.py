@@ -23,12 +23,14 @@ def execute_stress_routine(requirements_results: RequirementsResults, host_ip: s
 def run_stress_test(host_ip: str) -> Tuple[TestResults, ProcessStats]:
     start = datetime.now()
     completed = subprocess.run(
-        f"docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress write duration=1s -rate threads=10 -node {host_ip}'",
+        f"docker run --rm --network=host scylladb/cassandra-stress 'cassandra-stress write duration=1s -rate threads=10 -node {host_ip}'",
         shell=True,
         text=True,
         capture_output=True,
     )
-    end = datetime.now()
-    stats = ProcessStats(start, end, end - start)
-    test_results = CassandraStressParser().create_test_results(completed.stdout)
-    return (test_results, stats)
+    if completed.returncode == 0:
+        end = datetime.now()
+        stats = ProcessStats(start, end, end - start)
+        test_results = CassandraStressParser().create_test_results(completed.stdout)
+        return (test_results, stats)
+    raise ValueError("The stress test could not be executed")
