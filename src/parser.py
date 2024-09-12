@@ -1,7 +1,8 @@
 import logging
 from src.cli_types import TestResults
 from datetime import datetime
-from src.constants import Color as c
+from src.colors import Color as c
+from typing import List
 
 
 class CassandraStressParser:
@@ -10,7 +11,7 @@ class CassandraStressParser:
     def parse(self, text):
         return text.split("\n")
 
-    def get_results(self, output) -> list[str]:
+    def get_results(self, output) -> List[str]:
         parsed_output = self.parse(output)
         try:
             res = parsed_output[parsed_output.index("Results:") + 1 : -3]

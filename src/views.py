@@ -1,5 +1,5 @@
 from src.cli_types import RequirementsResults
-from src.constants import Color as c
+from src.colors import Color as c
 
 
 def individual_tests_view(requirements_results: RequirementsResults):
