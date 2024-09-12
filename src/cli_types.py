@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import List
 
 
 @dataclass
@@ -32,7 +33,7 @@ class ProcessStats:
 
 class RequirementsResults:
     number_stress_tests: int
-    process_stats: list[ProcessStats]
+    process_stats: List[ProcessStats]
     op_rate_sum: float
     latency_mean_average: float
     latency_99th_percentile_average: float

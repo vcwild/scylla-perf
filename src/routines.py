@@ -1,6 +1,6 @@
 from concurrent.futures import thread
 from datetime import datetime
-
+from typing import Tuple
 from src.cli_types import ProcessStats, RequirementsResults, TestResults
 from src.math import process_test_results
 import subprocess
@@ -20,7 +20,7 @@ def execute_stress_routine(requirements_results: RequirementsResults, host_ip: s
     process_test_results(test_result_list, requirements_results)
 
 
-def run_stress_test(host_ip: str) -> tuple[TestResults, ProcessStats]:
+def run_stress_test(host_ip: str) -> Tuple[TestResults, ProcessStats]:
     start = datetime.now()
     completed = subprocess.run(
         f"docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress write duration=1s -rate threads=10 -node {host_ip}'",
