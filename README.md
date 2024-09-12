@@ -13,6 +13,10 @@
 
 Scylla-perf is a CLI program that is used to run performance testing on a ScyllaDB cluster.
 
+The CLI works by encapsulating all of its dependencies in docker containers, so having [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) installed are the only requirements.
+
+This project **only supports Linux-based systems**.
+
 ## Table of Contents
 
 - [Requirements](#requirements)
