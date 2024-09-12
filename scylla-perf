@@ -6,7 +6,6 @@ from src.routines import execute_stress_routine
 from src.spinner import SpinnerThread
 from src.cli_types import RequirementsResults
 from src.views import results_view
-from src.constants import HOST_IP
 
 
 def _set_parser() -> argparse.ArgumentParser:
@@ -29,6 +28,8 @@ def _set_parser() -> argparse.ArgumentParser:
 
 
 def _run_cli(args):
+    from src.constants import HOST_IP  # only import this if the cli is run
+
     requirements_results = RequirementsResults(args.n_stress_tests)
     task = threading.Thread(
         target=execute_stress_routine,
@@ -45,8 +46,15 @@ def _run_cli(args):
     results_view(requirements_results)
 
 
+def _handle_help(args):
+    "if the -h flag is used, only print the help message"
+    if args.n_stress_tests == ["-h"]:
+        exit(0)
+
+
 def main():
     args = _set_parser()
+    _handle_help(args)
     _run_cli(args)
 
 
