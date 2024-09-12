@@ -17,12 +17,10 @@ Scylla-perf is a CLI program that is used to run performance testing on a Scylla
 
 - [Requirements](#requirements)
 - [Sanity Checks](#sanity-checks)
-- [Configuration](#configuration)
-  - [Deploying a ScyllaDB cluster](#deploying-a-scylladb-cluster)
-  - [Finding the host IP](#finding-the-host-ip)
-  - [Running a Cassandra-stress](#running-a-cassandra-stress)
-  - [Configuring the CLI program](#configuring-the-cli-program)
-- [Running the performance test](#running-the-performance-test)
+- [Manual Configuration](#manual-configuration)
+- [Running the Performance Test](#running-the-performance-test)
+- [Cleanup](#cleanup)
+- [License](#license)
 
 ## Requirements
 
@@ -42,9 +40,14 @@ make
 This will verify if `docker` and `docker-compose` are installed and will automatically pull the required container images.
 The make command **does NOT** install [docker](https://docs.docker.com/engine/install/) or [docker-compose](https://docs.docker.com/compose/install/). You need to install them manually.
 
-## Configuration
+If all sanity checks pass, you can skip to the [running the performance test](#running-the-performance-test) section.
 
-The following steps are required to configure the CLI.
+## Manual Configuration
+
+Only use the manual installation to troubleshoot if the [sanity checks](#sanity-checks) failed.
+
+<details close>
+<summary>Click to expand</summary>
 
 ### Deploying a ScyllaDB cluster
 
@@ -56,7 +59,7 @@ docker-compose up -d
 
 This will create a scylla service using the scylladb/scylla image. The service will be named `some-scylla` and will be running in the background.
 
-The container will be running in the background. You can check the logs by running:
+You can check the logs by running:
 
 ```bash
 docker logs some-scylla | tail
@@ -84,7 +87,13 @@ docker run --rm -it --network=host scylladb/cassandra-stress 'cassandra-stress w
 
 This will run a write test with 1000 operations on the host machine. We'll be using the host network to connect to the scylla container because it's already exposed to the host machine.
 
-### Configuring the CLI program
+If these steps are successful, you can proceed to run the performance test.
+
+</details>
+
+## Running the Performance Test
+
+Before running the performance test, you should make sure to pass the [sanity checks](#sanity-checks).
 
 To run the performance test, you should first give execute permission to the CLI program.
 
@@ -98,10 +107,26 @@ Add the current program directory to the PATH environment variable.
 export PATH=$PATH:$(pwd)
 ```
 
-If all the steps above were successful, the CLI should be configured and ready to run the performance test.
-
-## Running the performance test
-
-Before running the performance test, you should make sure to pass the [sanity checks](#sanity-checks) and all [configuration](#configuration) steps.
-
 To run the CLI program simply use the `scylla-perf` command and follow the instructions on the screen.
+
+The first time you run the program, it will instantiate the ScyllaDB database cluster.
+
+After the configuration is done, you can run any cassandra-stress test on the cluster.
+
+```bash
+scylla-perf <N>
+```
+
+Where `N` is the number of cassandra-stress tests you want to run.
+
+## Cleanup
+
+To clean up the resources created by the program, you can run the following command:
+
+```bash
+make clean
+```
+
+## License
+
+This project is licensed under the Apache License License - see the [LICENSE](LICENSE) file for details.
