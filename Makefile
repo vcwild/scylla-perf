@@ -1,4 +1,22 @@
-all: check check-compose check-status pull
+define task =
+if grep -q docker /etc/group
+then
+		touch .rootless
+		echo "Docker group already exists"
+else
+		sudo groupadd docker
+fi
+sudo usermod -aG docker $$USER
+endef
+
+all: check check-compose check-status install
+
+.ONESHELL:
+
+.PHONY: all check check-compose check-status install clean
+
+.rootless:
+	@$(task)
 
 # check if docker is installed
 check:
@@ -12,15 +30,13 @@ check-compose:
 check-status:
 	@docker info
 
-up-compose:
-	@docker-compose up -d
-
 # pull docker image dependencies
-pull: check
+install: .rootless
 	@docker pull scylladb/scylla
 	@docker pull scylladb/cassandra-stress
 
-# pull docker images and start the scyllaDB container
-install: pull up-compose
+clean:
+	@docker-compose down --rmi all --remove-orphans
+	@docker rmi scylladb/cassandra-stress -f
+	@rm -f .rootless
 
-.PHONY: all check check-compose check-status pull up-compose install
