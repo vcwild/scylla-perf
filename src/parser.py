@@ -1,5 +1,7 @@
+import logging
 from src.cli_types import TestResults
 from datetime import datetime
+from src.constants import Color as c
 
 
 class CassandraStressParser:
@@ -10,8 +12,15 @@ class CassandraStressParser:
 
     def get_results(self, output) -> list[str]:
         parsed_output = self.parse(output)
-        # get list after matching the "Results:" line
-        res = parsed_output[parsed_output.index("Results:") + 1 : -3]
+        try:
+            res = parsed_output[parsed_output.index("Results:") + 1 : -3]
+        except ValueError as exc:
+            logging.error(
+                c.RED
+                + "The stress test was NOT executed, please follow the configuration steps from the project README"
+                + c.END
+            )
+            raise exc
         if len(res) == 17:
             return res
         raise ValueError("The output is not in the expected format")
