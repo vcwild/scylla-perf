@@ -14,6 +14,15 @@ jobs:
       - name: Check CLI functional
         run: chmod +x ./scylla-perf |
               ./scylla-perf  -h
+  compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "docker-compose.yml"
+      - name: Check Docker Compose functional
+        run: docker compose up -d
   run:
     runs-on: ubuntu-22.04
     steps:
