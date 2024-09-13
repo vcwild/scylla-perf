@@ -24,5 +24,5 @@ jobs:
             docker run --name some-scylla --hostname some-scylla -p 9042:9042 -p 19042:19042 -d scylladb/scylla --smp 1
             sleep 15
             chmod +x ./scylla-perf
-            ./scylla-perf 2
+            ./scylla-perf 2 --ci
 

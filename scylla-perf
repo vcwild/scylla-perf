@@ -23,6 +23,12 @@ def _set_parser() -> argparse.ArgumentParser:
         choices=range(1, 11),  # limit to 10 tests max
         action="store",
     )
+    # add a --ci flag to run the tests in the CI and disable visual feedback
+    parser.add_argument(
+        "--ci",
+        action="store_true",
+        help="Run the tests in continuous integration mode, without visual feedback",
+    )
     # create an argument to run the docker-compose file
     return parser.parse_args()
 
@@ -40,7 +46,8 @@ def _run_cli(args):
     )
     task.start()
     spinner_thread = SpinnerThread()
-    spinner_thread.start()
+    if not args.ci:
+        spinner_thread.start()
     task.join()
     spinner_thread.stop()
     results_view(requirements_results)
