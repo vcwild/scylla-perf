@@ -31,7 +31,7 @@ jobs:
       - name: Use Docker in rootless mode.
         run: |
             docker run --name some-scylla --hostname some-scylla -p 9042:9042 -p 19042:19042 -d scylladb/scylla --smp 1
-            sleep 15
+            sleep 3
             chmod +x ./scylla-perf
             ./scylla-perf 2 --ci
 
